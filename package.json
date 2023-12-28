@@ -1,0 +1,15 @@
+{
+  "name": "infom218_groupe_1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "UNamur students",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^20.10.5",
+    "node-sql-parser": "^4.17.0"
+  }
+}
