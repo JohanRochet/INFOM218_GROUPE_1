@@ -1,0 +1,139 @@
+{
+    "actionsPerTable": {
+        "messages": {
+            "select": 18,
+            "update": 6,
+            "insert": 2
+        },
+        "conversations": {
+            "update": 14,
+            "select": 13,
+            "insert": 2
+        },
+        "accounts": {
+            "update": 122,
+            "select": 4,
+            "insert": 1,
+            "delete": 8
+        },
+        "resolver_results": {
+            "select": 4
+        },
+        "discovery_results": {
+            "select": 4
+        },
+        "signed_prekeys": {
+            "select": 6,
+            "insert": 1
+        },
+        "prekeys": {
+            "select": 200,
+            "insert": 100
+        },
+        "sessions": {
+            "select": 13,
+            "insert": 1
+        },
+        "contacts": {
+            "insert": 22,
+            "delete": 20,
+            "select": 1
+        },
+        "identities": {
+            "select": 8,
+            "update": 1,
+            "insert": 1
+        },
+        "presence_templates": {
+            "select": 1,
+            "delete": 2,
+            "insert": 1
+        },
+        "android_metadata": {
+            "create": 1,
+            "select": 1
+        }
+    },
+    "actionsPerColumn": {
+        "messages:*:select": 17,
+        "resolver_results:*:select": 4,
+        "discovery_results:*:select": 4,
+        "conversations:attributes:select": 3,
+        "signed_prekeys:key:select": 3,
+        "prekeys:key:select": 200,
+        "sessions:device_id:select": 9,
+        "contacts:presence_name:insert": 22,
+        "contacts:servername:insert": 22,
+        "contacts:avatar:insert": 22,
+        "contacts:photouri:insert": 22,
+        "contacts:options:insert": 22,
+        "contacts:groups:insert": 22,
+        "contacts:pgpkey:insert": 22,
+        "contacts:systemaccount:insert": 22,
+        "contacts:last_presence:insert": 22,
+        "contacts:jid:insert": 22,
+        "contacts:rtpCapability:insert": 22,
+        "contacts:systemname:insert": 22,
+        "contacts:accountUuid:insert": 22,
+        "contacts:last_time:insert": 22,
+        "sessions:name:select": 2,
+        "accounts:avatar:insert": 1,
+        "accounts:options:insert": 1,
+        "accounts:server:insert": 1,
+        "accounts:status:insert": 1,
+        "accounts:fast_token:insert": 1,
+        "accounts:resource:insert": 1,
+        "accounts:hostname:insert": 1,
+        "accounts:username:insert": 1,
+        "accounts:status_message:insert": 1,
+        "accounts:rosterversion:insert": 1,
+        "accounts:keys:insert": 1,
+        "accounts:port:insert": 1,
+        "accounts:uuid:insert": 1,
+        "accounts:pinned_mechanism:insert": 1,
+        "accounts:fast_mechanism:insert": 1,
+        "accounts:password:insert": 1,
+        "accounts:pinned_channel_binding:insert": 1,
+        "accounts:display_name:insert": 1,
+        "identities:trust:select": 7,
+        "identities:active:select": 7,
+        "identities:last_activation:select": 7,
+        "identities:key:select": 7,
+        "identities:active:insert": 1,
+        "identities:fingerprint:insert": 1,
+        "identities:account:insert": 1,
+        "identities:ownkey:insert": 1,
+        "identities:key:insert": 1,
+        "identities:name:insert": 1,
+        "identities:trust:insert": 1,
+        "signed_prekeys:account:insert": 1,
+        "signed_prekeys:id:insert": 1,
+        "signed_prekeys:key:insert": 1,
+        "prekeys:account:insert": 100,
+        "prekeys:id:insert": 100,
+        "prekeys:key:insert": 100,
+        "conversations:*:select": 3,
+        "conversations:status:insert": 2,
+        "conversations:mode:insert": 2,
+        "conversations:name:insert": 2,
+        "conversations:uuid:insert": 2,
+        "conversations:contactUuid:insert": 2,
+        "conversations:contactJid:insert": 2,
+        "conversations:attributes:insert": 2,
+        "conversations:accountUuid:insert": 2,
+        "conversations:created:insert": 2,
+        "presence_templates:*:select": 1,
+        "presence_templates:status:insert": 1,
+        "presence_templates:uuid:insert": 1,
+        "presence_templates:message:insert": 1,
+        "presence_templates:last_used:insert": 1,
+        "android_metadata:locale:select": 1,
+        "accounts:*:select": 1,
+        "contacts:*:select": 1,
+        "sessions:*:select": 2,
+        "sessions:account:insert": 1,
+        "sessions:key:insert": 1,
+        "sessions:name:insert": 1,
+        "sessions:device_id:insert": 1
+    }
+}

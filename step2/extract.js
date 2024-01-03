@@ -1,6 +1,6 @@
 const fs = require('fs');
-const { Parser } = require('node-sql-parser');
-const file = fs.readFileSync("android-logs", "utf-8");
+const { Parser } = require('node-sql-parser/build/sqlite');
+const file = fs.readFileSync("logs-30_12_23", "utf-8");
 const fileJSON = JSON.parse(file);
 const messageStart = "/data/user/0/eu.siacs.conversations/databases/history:"
 const messages = fileJSON["logcatMessages"]
@@ -8,7 +8,8 @@ const messages = fileJSON["logcatMessages"]
             && m.message.includes(messageStart));
 let sql = "";
 const parser = new Parser();
-const map = new Map();
+const actionUsageMap = new Map();
+const usedColumns = new Map();
 
 for (let {message} of messages) {
     // Remove log path
@@ -34,12 +35,39 @@ for (let {message} of messages) {
        try {
            const ast = parser.astify(message);
            astx = JSON.stringify()
+
+           if(ast[0].from){
+               ast[0].table = ast[0].from;
+           }
            const tables = ast[0].table;
            const table = tables[0].table.replace("kreplace", "key")
-           if(!map.has(table)) map.set(table, new Map());
-           const mapTable = map.get(table);
+           if(!actionUsageMap.has(table)) actionUsageMap.set(table, new Map());
+           const mapTable = actionUsageMap.get(table);
            const count = mapTable.get(ast[0].type) ?? 0;
+
+           if(ast[0].columns){
+               const columns = ast[0].columns;
+               if(typeof columns === "string"){
+                   const name = table + ":" + columns.replace("kreplace", "key") + ":" + ast[0].type;
+                   const count = usedColumns.get(name) ?? 0;
+                   usedColumns.set(name, count + 1 );
+               }
+
+               if( typeof columns === "object"){
+                   for(let column of columns){
+                       if(typeof column !== "string"){
+                            if(column.expr.column){
+                                column = column.expr.column;
+                            }
+                       }
+                       const name = table + ":" + column.replace("kreplace", "key") + ":" + ast[0].type;
+                       const count = usedColumns.get(name) ?? 0;
+                       usedColumns.set(name, count + 1 );
+                   }
+               }
+           }
            mapTable.set(ast[0].type, count + 1 );
+           sql +=  `-- Columns : ${JSON.stringify(ast[0].columns ?? ast[0].set)}\n`;
        }
        catch (e) {
             sql += "-- ERROR: " + e + astx + "\n";
@@ -55,8 +83,8 @@ for (let {message} of messages) {
                 match = message.match(regex);
                 if(match){
                     const table = match[1].replace("kreplace", "key");
-                    if(!map.has(table)) map.set(table, new Map());
-                    const mapTable = map.get(table);
+                    if(!actionUsageMap.has(table)) actionUsageMap.set(table, new Map());
+                    const mapTable = actionUsageMap.get(table);
                     const count = mapTable.get(type) ?? 0;
                     mapTable.set(type, count + 1 );
                     sql += "-- Found workaround " + type + " " + table + "\n";
@@ -68,5 +96,12 @@ for (let {message} of messages) {
     }
     
 }
-console.log(map)
+const usage = {
+    actionsPerTable: Object.fromEntries(Array.from(actionUsageMap)
+        .map(([key, value]) => [key, Object.fromEntries(value)])),
+    actionsPerColumn: Object.fromEntries(usedColumns)
+}
+console.log(actionUsageMap);
+console.log(usedColumns);
+fs.writeFileSync("usage.json", JSON.stringify(usage, null, 4))
 fs.writeFileSync("queries-log.sql", sql)
